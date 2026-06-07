@@ -1,1 +1,81 @@
+import java.util.Random;
+import java.util.Scanner;
 
+public class NumberGuessingGame {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.println("Welcome to the Number Guessing Game!");
+        System.out.println("I'm thinking of a number between 1 and 100.");
+
+        // Generate random number between 1 and 100
+        int secretNumber = random.nextInt(100) + 1;
+
+        // Select difficulty level
+        System.out.println("\nPlease select the difficulty level:");
+        System.out.println("1. Easy (10 chances)");
+        System.out.println("2. Medium (5 chances)");
+        System.out.println("3. Hard (3 chances)");
+
+        int chances = 0;
+
+        while (true) {
+            System.out.print("\nEnter your choice: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                chances = 10;
+                System.out.println("\nGreat! You have selected the Easy difficulty level.");
+                break;
+            } else if (choice == 2) {
+                chances = 5;
+                System.out.println("\nGreat! You have selected the Medium difficulty level.");
+                break;
+            } else if (choice == 3) {
+                chances = 3;
+                System.out.println("\nGreat! You have selected the Hard difficulty level.");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please select 1, 2, or 3.");
+            }
+        }
+
+        System.out.println("Let's start the game!");
+
+        int attempts = 0;
+        boolean guessedCorrectly = false;
+
+        while (attempts < chances) {
+            System.out.print("\nEnter your guess: ");
+            int guess = scanner.nextInt();
+
+            attempts++;
+
+            if (guess == secretNumber) {
+                System.out.println(
+                        "Congratulations! You guessed the correct number in "
+                                + attempts + " attempts.");
+                guessedCorrectly = true;
+                break;
+            } else if (guess < secretNumber) {
+                System.out.println("Incorrect! The number is greater than " + guess + ".");
+            } else {
+                System.out.println("Incorrect! The number is less than " + guess + ".");
+            }
+
+            int remainingChances = chances - attempts;
+            if (remainingChances > 0) {
+                System.out.println("You have " + remainingChances + " chance(s) left.");
+            }
+        }
+
+        if (!guessedCorrectly) {
+            System.out.println("\nGame Over!");
+            System.out.println("The correct number was: " + secretNumber);
+        }
+
+        scanner.close();
+    }
+}
